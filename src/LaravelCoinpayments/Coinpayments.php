@@ -248,11 +248,12 @@ class Coinpayments
      * @throws JsonParseException
      * @throws MessageSendException
      */
-    public function getCallbackAddress($currency, $ipnUrl = '')
+    public function getCallbackAddress($currency, $ipnUrl = '', $label = '')
     {
         $req = [
             'currency' => $currency,
             'ipn_url'  => $ipnUrl,
+            'label' => $label
         ];
 
         return $this->apiCall(CoinpaymentsCommand::GET_CALLBACK_ADDRESS, $req);
