@@ -1,4 +1,6 @@
-<?php namespace Oasin\LaravelCoinpayments\Providers;
+<?php
+
+namespace Oasin\LaravelCoinpayments\Providers;
 
 use Oasin\LaravelCoinpayments\Controllers\CoinpaymentsController;
 use Oasin\LaravelCoinpayments\Facades\Coinpayments;
@@ -10,6 +12,7 @@ use Oasin\LaravelCoinpayments\Observables\DepositObservable;
 use Oasin\LaravelCoinpayments\Observables\TransactionObservable;
 use Oasin\LaravelCoinpayments\Observables\WithdrawalObservable;
 use Kevupton\LaravelPackageServiceProvider\ServiceProvider;
+
 class LaravelCoinpaymentsServiceProvider extends ServiceProvider
 {
 
@@ -20,10 +23,10 @@ class LaravelCoinpaymentsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot ()
+    public function boot()
     {
-        $this->registerConfig(__DIR__ . '/../../../config/coinpayments.php', 'coinpayments.php');
-        $this->loadMigrationsFrom(__DIR__ . '/../../../database/migrations');
+        $this->registerConfig(__DIR__ . '/../../config/coinpayments.php', 'coinpayments.php');
+        $this->loadMigrationsFrom(__DIR__ . '/../../database/migrations');
 
         Deposit::observe(new DepositObservable());
         Withdrawal::observe(new WithdrawalObservable());
@@ -35,7 +38,7 @@ class LaravelCoinpaymentsServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register ()
+    public function register()
     {
         $this->app->singleton(self::SINGLETON, function ($app) {
             return new LaravelCoinpayments($app);
@@ -45,11 +48,12 @@ class LaravelCoinpaymentsServiceProvider extends ServiceProvider
         $this->registerRoute();
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../../../config/coinpayments.php', 'coinpayments'
+            __DIR__ . '/../../config/coinpayments.php',
+            'coinpayments'
         );
     }
 
-    private function registerRoute ()
+    private function registerRoute()
     {
         $is_enabled = config('coinpayments.route.enabled');
         $path       = config('coinpayments.route.path');
