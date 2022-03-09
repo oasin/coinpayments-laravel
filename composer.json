@@ -34,7 +34,7 @@
   },
   "minimum-stability": "stable",
   "require-dev": {
-    "laravel/laravel": "^7.5",
+    "laravel/framework": "^8.75|^9.0",
     "laravel/lumen": "^5.5"
   }
 }
