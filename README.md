@@ -9,7 +9,7 @@ Implementation of most of the CoinPayments functionality.
 ### Require
 
 ```
-composer require kevupton/laravel-coinpayments
+composer require oasin/laravel-coinpayments
 ```
 
 ### 1. Install Service Provider
