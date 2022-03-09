@@ -9,8 +9,7 @@ use Oasin\LaravelCoinpayments\Models\Withdrawal;
 use Oasin\LaravelCoinpayments\Observables\DepositObservable;
 use Oasin\LaravelCoinpayments\Observables\TransactionObservable;
 use Oasin\LaravelCoinpayments\Observables\WithdrawalObservable;
-use Oasin\LaravelPackageServiceProvider\ServiceProvider;
-
+use Kevupton\LaravelPackageServiceProvider\ServiceProvider;
 class LaravelCoinpaymentsServiceProvider extends ServiceProvider
 {
 
