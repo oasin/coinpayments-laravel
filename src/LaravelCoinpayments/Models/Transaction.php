@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: kevin
@@ -45,6 +46,6 @@ class Transaction extends Model
         'buyer_email', 'buyer_name', 'item_name', 'item_number',
         'invoice', 'custom', 'ipn_url', 'txn_id', 'fee', 'dest_tag',
         'confirms_needed', 'timeout', 'status_url', 'qrcode_url',
-        'received_amount', 'received_confirms', 'status', 'status_text'
+        'received_amount', 'received_confirms', 'status', 'status_text', 'user_id'
     ];
 }

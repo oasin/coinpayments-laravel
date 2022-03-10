@@ -35,7 +35,7 @@ class LaravelCoinpayments extends Coinpayments
 
     private $app;
 
-    public function __construct ($app)
+    public function __construct($app)
     {
         $this->app = $app;
 
@@ -60,16 +60,18 @@ class LaravelCoinpayments extends Coinpayments
      * @throws Exceptions\JsonParseException
      * @throws Exceptions\MessageSendException
      */
-    protected function apiCall ($cmd, $req = [])
+    protected function apiCall($cmd, $req = [])
     {
         $receipt = parent::apiCall($cmd, $req);
 
         $has_error = $receipt->hasError();
 
-        cp_log([
-            'request'  => $receipt->getRequest(),
-            'response' => $receipt->getResponse(),
-        ], $has_error ? 'API_CALL_ERROR' : 'API_CALL',
+        cp_log(
+            [
+                'request'  => $receipt->getRequest(),
+                'response' => $receipt->getResponse(),
+            ],
+            $has_error ? 'API_CALL_ERROR' : 'API_CALL',
             $has_error ? Log::LEVEL_ERROR : Log::LEVEL_ALL
         );
 
@@ -78,6 +80,10 @@ class LaravelCoinpayments extends Coinpayments
         }
 
         $data = $receipt->toArray();
+
+        // dd($data);
+
+        //  $data['user_id'] = auth()->user()->id ?? 1;
 
         if (isset($data['id'])) {
             $data['ref_id'] = $data['id'];
@@ -96,7 +102,15 @@ class LaravelCoinpayments extends Coinpayments
             case CoinpaymentsCommand::CREATE_TRANSFER:
                 return Transfer::create($data);
             case CoinpaymentsCommand::GET_CALLBACK_ADDRESS:
-                return CallbackAddress::create($data);
+                return CallbackAddress::create([
+                    'address' => data_get($data, 'address'),
+                    'currency' => data_get($data, 'currency'),
+                    'pubkey' => data_get($data, 'pubkey'),
+                    'dest_tag' => data_get($data, 'dest_tag'),
+                    'ipn_url' => data_get($data, 'ipn_url'),
+                   // 'user_id' => data_get($data, 'user_id'),
+                    'label' => data_get($data, 'label')
+                ]);
             case CoinpaymentsCommand::CONVERT:
                 return Conversion::create($data);
             case CoinpaymentsCommand::CREATE_MASS_WITHDRAWAL:
@@ -111,7 +125,7 @@ class LaravelCoinpayments extends Coinpayments
      * @param Receipt $receipt
      * @return MassWithdrawal
      */
-    private function registerMassWithdrawal (Receipt $receipt)
+    private function registerMassWithdrawal(Receipt $receipt)
     {
         /** @var MassWithdrawal $mass_withdrawal */
         $mass_withdrawal = MassWithdrawal::create();
@@ -146,7 +160,7 @@ class LaravelCoinpayments extends Coinpayments
      * @param null $mass_withdrawal_id
      * @return mixed
      */
-    private function saveWithdrawal ($result  = null, $request = null, $mass_withdrawal_id = null)
+    private function saveWithdrawal($result  = null, $request = null, $mass_withdrawal_id = null)
     {
         if (isset($result['id'])) {
             $result['ref_id'] = $result['id'];
@@ -170,7 +184,7 @@ class LaravelCoinpayments extends Coinpayments
      * @return Ipn
      * @throws IpnIncompleteException|CoinPaymentsException
      */
-    public function validateIPN (array $request, array $server, $headers = [])
+    public function validateIPN(array $request, array $server, $headers = [])
     {
         $log_data = [
             'request' => $request,
@@ -223,7 +237,7 @@ class LaravelCoinpayments extends Coinpayments
      * @param Ipn $ipn
      * @throws CoinPaymentsException
      */
-    private function updateModel (Ipn $ipn)
+    private function updateModel(Ipn $ipn)
     {
         $ipn_type = $ipn->ipn_type;
         if (!$ipn_type) {
@@ -265,7 +279,7 @@ class LaravelCoinpayments extends Coinpayments
      * @param $array
      * @return array
      */
-    private function filterNullable ($array)
+    private function filterNullable($array)
     {
         return collect($array)->filter(function ($value) {
             return !is_null($value);
@@ -276,7 +290,7 @@ class LaravelCoinpayments extends Coinpayments
      * @param Request $request
      * @return Ipn
      */
-    public function validateIPNRequest (Request $request)
+    public function validateIPNRequest(Request $request)
     {
         return $this->validateIPN($request->all(), $request->server(), $request->headers);
     }

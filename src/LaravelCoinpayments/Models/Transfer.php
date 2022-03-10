@@ -25,6 +25,6 @@ class Transfer extends Model
 {
     public $fillable = [
         'amount', 'currency', 'merchant', 'pbntag',
-        'auto_confirm', 'ref_id', 'status'
+        'auto_confirm', 'ref_id', 'status', 'user_id'
     ];
 }

@@ -24,6 +24,6 @@ namespace Oasin\LaravelCoinpayments\Models;
 class Conversion extends Model
 {
     protected $fillable = [
-        'amount', 'from', 'to', 'address', 'dest_tag', 'ref_id'
+        'amount', 'from', 'to', 'address', 'dest_tag', 'ref_id', 'user_id'
     ];
 }

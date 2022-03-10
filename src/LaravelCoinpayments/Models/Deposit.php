@@ -32,6 +32,6 @@ class Deposit extends Model
     public $fillable = [
         'address', 'txn_id', 'status', 'status_text',
         'currency', 'confirms', 'amount', 'amounti', 'fee',
-        'feei', 'dest_tag',
+        'feei', 'dest_tag', 'user_id',
     ];
 }

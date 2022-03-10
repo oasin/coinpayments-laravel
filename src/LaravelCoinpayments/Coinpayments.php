@@ -253,7 +253,7 @@ class Coinpayments
         $req = [
             'currency' => $currency,
             'ipn_url'  => $ipnUrl,
-            'label' => $label
+            'label' => $label,
         ];
 
         return $this->apiCall(CoinpaymentsCommand::GET_CALLBACK_ADDRESS, $req);

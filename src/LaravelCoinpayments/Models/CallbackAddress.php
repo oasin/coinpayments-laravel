@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: kevin
@@ -24,6 +25,6 @@ namespace Oasin\LaravelCoinpayments\Models;
 class CallbackAddress extends Model
 {
     public $fillable = [
-        'address', 'currency', 'pubkey', 'dest_tag', 'ipn_url'
+        'address', 'currency', 'pubkey', 'dest_tag', 'ipn_url', 'alt_address', 'label', 'user_id'
     ];
 }

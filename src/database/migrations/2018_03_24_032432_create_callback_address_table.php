@@ -22,6 +22,8 @@ class CreateCallbackAddressTable extends Migration
             $table->text('pubkey')->nullable();
             $table->string('ipn_url')->nullable();
             $table->string('dest_tag')->nullable();
+            $table->string('label')->nullable();
+            $table->string('alt_address')->nullable();
             $table->unique(['address', 'currency']);
             $table->timestamps();
         });
